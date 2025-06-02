@@ -41,7 +41,7 @@ function App() {
           <Route path="/chargers" element={<PrivateRoute><ChargerList /></PrivateRoute>} />
           <Route path="/map" element={<PrivateRoute><ChargerMap /></PrivateRoute>} />
           <Route path="/404" element={<NotFound />} />
-          <Route path="*" element={<Navigate to="/404\" replace />} />
+          <Route path="*" element={<Navigate to="/404" replace />} />
         </Routes>
       </main>
       <Footer />
