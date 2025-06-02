@@ -22,6 +22,8 @@ interface Station {
   };
 }
 
+type StationFormData = Omit<Station, '_id' | 'createdBy'>;
+
 const ChargerList = () => {
   const { 
     stations, 
@@ -72,7 +74,7 @@ const ChargerList = () => {
     }
   };
 
-  const handleFormSubmit = async (stationData: Omit<Station, '_id'>) => {
+  const handleFormSubmit = async (stationData: StationFormData) => {
     if (currentStation) {
       return await updateStation(currentStation._id, stationData);
     } else {

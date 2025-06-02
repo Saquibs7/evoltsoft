@@ -111,7 +111,7 @@ const Dashboard = () => {
             {Object.entries(connectorCounts).map(([type, count]) => (
               <div key={type} className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
                 <h3 className="font-medium text-gray-800 dark:text-white">{type}</h3>
-                <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">{count}</p>
+                <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">{count as number}</p>
               </div>
             ))}
           </div>

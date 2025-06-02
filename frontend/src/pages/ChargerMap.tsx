@@ -5,20 +5,20 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import MapComponent from '../components/MapComponent';
 import ChargerForm from '../components/ChargerForm';
 import { Plus, Filter, X } from 'lucide-react';
-
-// ... (your existing interfaces)
-
 interface Station {
   _id: string;
   name: string;
+  status: 'Active' | 'Inactive'; // or string if you want
+  powerOutput: number;
+  connectorType: string;
   location: {
     latitude: number;
     longitude: number;
   };
-  status: string;
-  connectorType: string;
-  powerOutput: number;
-  // Add any other fields your Station object uses
+  createdBy?: {
+    _id: string;
+    name: string;
+  };
 }
 
 const ChargerMap = () => {

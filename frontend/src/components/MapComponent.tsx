@@ -1,10 +1,10 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import type { LatLngTuple } from 'leaflet';
 
 // Fix for default marker icons
-// @ts-expect-error: _getIconUrl is a private property not typed in leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
@@ -27,21 +27,11 @@ const highlightedIcon = L.icon({
   popupAnchor: [1, -34],
 });
 
-// Map controller component
-const MapController = ({ center, zoom }: { center: [number, number]; zoom: number }) => {
-  const map = useMap();
-  
-  useEffect(() => {
-    map.flyTo(center, zoom);
-  }, [center, zoom, map]);
-
-  return null;
-};
-
+// Use the stricter status type to match the rest of your project
 interface Station {
   _id: string;
   name: string;
-  status: string;
+  status: "Active" | "Inactive";
   powerOutput: number;
   connectorType: string;
   location: {
@@ -59,30 +49,28 @@ interface MapComponentProps {
 
 const MapComponent = forwardRef((props: MapComponentProps, ref) => {
   const { stations, highlightedStationId, onEdit, onDelete } = props;
-  const [map, setMap] = useState<any>(null);
-  
+  const mapRef = useRef<L.Map | null>(null);
+
   useImperativeHandle(ref, () => ({
-    flyTo: (position: [number, number], zoom: number) => {
-      if (map) {
-        map.flyTo(position, zoom);
-      }
+    flyTo: (position: LatLngTuple, zoom: number) => {
+      mapRef.current?.flyTo(position, zoom);
     }
   }));
-  
+
   // Default center (New York)
-  const defaultCenter: [number, number] = [40.7128, -74.0060];
-  
+  const defaultCenter: LatLngTuple = [40.7128, -74.0060];
+
   // Calculate center if stations exist
-  const center = stations.length > 0 ? 
-    [stations[0].location.latitude, stations[0].location.longitude] : 
-    defaultCenter;
+  const center: LatLngTuple = stations.length > 0
+    ? [stations[0].location.latitude, stations[0].location.longitude]
+    : defaultCenter;
 
   return (
     <MapContainer 
       center={center}
       zoom={13}
       style={{ height: '500px', width: '100%' }}
-      whenCreated={setMap}
+      ref={mapRef}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -92,7 +80,7 @@ const MapComponent = forwardRef((props: MapComponentProps, ref) => {
       {stations.map(station => (
         <Marker
           key={station._id}
-          position={[station.location.latitude, station.location.longitude]}
+          position={[station.location.latitude, station.location.longitude] as LatLngTuple}
           icon={station._id === highlightedStationId ? highlightedIcon : defaultIcon}
         >
           <Popup>

@@ -17,10 +17,10 @@ interface Station {
   powerOutput: number;
   connectorType: string;
 }
-interface MapControllerProps {
-  center: [number, number];
-  zoom: number;
-}
+// interface MapControllerProps {
+//   center: [number, number];
+//   zoom: number;
+// }
 const MapController = ({ center, zoom }: { center: [number, number]; zoom: number }) => {
   const map = useMap();
   
