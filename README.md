@@ -41,8 +41,8 @@ VITE_API_BASE_URL=http://localhost:5000/api
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/charging-station-management.git
-cd charging-station-management
+git clone https://github.com/Saquibs7/evoltsoft.git
+cd evoltsoft
 ```
 
 2. Install dependencies for root, frontend, and backend
@@ -95,3 +95,5 @@ npm run build:backend
 - Map view of all charging stations
 - Filtering stations by status, connector type, and power output
 - Light/dark mode theme
+
+## now check README.md file of frontend and backend for more information
