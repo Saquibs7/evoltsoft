@@ -34,7 +34,7 @@ function App() {
     <div className="min-h-screen flex flex-col">
       <Header toggleTheme={toggleTheme} currentTheme={theme} />
       <main className="flex-grow container mx-auto px-4 py-8">
-        <Routes>
+       <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
