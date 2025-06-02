@@ -2,7 +2,7 @@
 
 A full-stack application for managing EV charging stations.
 
-## Live link : https://evoltsoft.vercel.app/login/
+## Live link : https://evoltsoft.vercel.app/
 ## backend : https://evoltsoft-8k1o.onrender.com/api
 ## Tech Stack
 
